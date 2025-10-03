@@ -7,9 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,12 +25,6 @@ data class Champion(
 )
 
 val championsList = listOf(
-    /*Champion(
-        "Annie",
-        "La niña oscura",
-        "Annie es una joven maga con poderes pirotécnicos que puede invocar a su oso de peluche, Tibbers.",
-        "https://tu-servidor.com/images/annie.png"
-    )*/
     Champion(
         "Annie",
         "La niña oscura",
@@ -115,14 +107,6 @@ fun ChampionItem(champion: Champion) {
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        /*AsyncImage(
-            model = champion.imageUrl,
-            contentDescription = champion.name,
-            modifier = Modifier
-                .size(100.dp)
-                .border(BorderStroke(1.dp, Color.Gray))
-                .padding(4.dp)
-        )*/
         Image(
             painter = painterResource(id = champion.imageResId),
             contentDescription = champion.name,
@@ -163,6 +147,25 @@ fun ChampionsList(champions: List<Champion>) {
         items(champions) { champion ->
             ChampionItem(champion = champion)
             Divider()
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ChampionsScreen() {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "LazyApp")
+                }
+            )
+        }
+    ) { innerPadding ->
+        // Aplica padding para que el contenido no quede bajo el TopAppBar
+        Box(modifier = Modifier.padding(innerPadding)) {
+            ChampionsList(champions = championsList)
         }
     }
 }
